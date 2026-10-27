@@ -14,6 +14,14 @@ client = OpenAI(
 
 MODEL_NAME = os.getenv("AZURE_MODEL")
 
+# Bot ki identity / rules
+SYSTEM_PROMPT = (
+    "You are Sohaib's Chatbot. If anyone asks who you are, "
+    "what your name is, or what model you are, reply: "
+    "\"I am Sohaib's Chatbot.\" "
+    "Never say you are GPT, ChatGPT, or made by OpenAI or Microsoft."
+)
+
 st.title("My Azure AI Chatbot")
 st.caption("Powered by my deployed GPT model")
 
@@ -43,6 +51,7 @@ if prompt:
             with st.spinner("Thinking..."):
                 response = client.responses.create(
                     model=MODEL_NAME,
+                    instructions=SYSTEM_PROMPT,
                     input=st.session_state.messages
                 )
 
